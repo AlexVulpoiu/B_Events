@@ -16,11 +16,15 @@
 
 package com.example.b_events
 
+import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
+import android.widget.VideoView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -49,10 +53,21 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeAuthenticationState()
 
-        binding.settingsButton.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToSettingsFragment()
-            findNavController().navigate(action)
-        }
+        val videoView = view.findViewById<VideoView>(R.id.videoView)
+        //Creating MediaController
+        val mediaController = MediaController(activity)
+        mediaController.setAnchorView(videoView)
+        //specify the location of media file
+        val uri: Uri = Uri.parse("android.resource://com.example.b_events/" + R.raw.bucharest)
+        //Setting MediaController and URI, then starting the videoView
+        videoView.setMediaController(mediaController)
+        videoView.setVideoURI(uri)
+        videoView.requestFocus()
+        videoView.start()
+//        binding.settingsButton.setOnClickListener {
+//            val action = MainFragmentDirections.actionMainFragmentToSettingsFragment()
+//            findNavController().navigate(action)
+//        }
     }
 
     /**
@@ -74,7 +89,7 @@ class MainFragment : Fragment() {
                     }
                 }
                 else -> {
-                    binding.welcomeText.text = factToDisplay
+                    binding.welcomeText.text = getString(R.string.welcome_text)
 
                     binding.authButton.text = getString(R.string.login_button_text)
                     binding.authButton.setOnClickListener {
@@ -85,6 +100,7 @@ class MainFragment : Fragment() {
         })
     }
 
+    @SuppressLint("StringFormatMatches")
     private fun getFactWithPersonalization(fact: String): String {
         return String.format(
             resources.getString(

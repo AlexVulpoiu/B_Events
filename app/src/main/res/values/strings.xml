@@ -20,11 +20,12 @@
     <string name="logout_button_text">Logout</string>
     <string name="login_unsuccessful_msg">Login unsuccessful</string>
     <string name="welcome_message">It\'s currently %1$s.</string>
-    <string name="welcome_message_authed">Hi %1$s! Did you know that %2$s.</string>
+    <string name="welcome_message_authed">Hi %1$s!</string>
     <string name="login_prompt">Login to find the latest events in Bucharest!</string>
     <string name="login_btn">Login</string>
     <string name="settings_btn">Settings</string>
     <string name="settings_fact_type_title">Fun Fact Type</string>
+    <string name="welcome_text">Hi there!\n Would you like to spend some time in Bucharest?</string>
 
     <string name="fact_type_android">Android</string>
     <string name="fact_type_california">California</string>
