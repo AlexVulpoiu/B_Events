@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.example.b_events
+package com.example.b_events.authentication
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.preference.PreferenceManager
+import com.example.b_events.R
 import kotlin.random.Random
 
 class LoginViewModel : ViewModel() {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.b_events
+package com.example.b_events.authentication
 
 import android.app.Activity
 import android.content.Intent
@@ -30,6 +30,7 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import com.example.b_events.R
 import com.example.b_events.databinding.*
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -77,7 +78,8 @@ class LoginFragment : Fragment() {
         // If the user did not log in successfully, display an error message.
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
-                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.popBackStack()
+//                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.popBackStack()
+                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.navigate(R.id.eventsFragment)
                 LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION -> Snackbar.make(
                     view, requireActivity().getString(R.string.login_unsuccessful_msg),
                     Snackbar.LENGTH_LONG

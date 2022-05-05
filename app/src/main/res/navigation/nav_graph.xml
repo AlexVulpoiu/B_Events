@@ -24,19 +24,14 @@
     <fragment
             android:id="@+id/mainFragment"
             android:name="com.example.b_events.MainFragment"
-            android:label="MainFragment">
-        <action
-                android:id="@+id/action_mainFragment_to_settingsFragment"
-                app:destination="@id/settingsFragment"/>
-    </fragment>
+            android:label="MainFragment"/>
     <fragment
-            android:id="@+id/settingsFragment"
-            android:name="com.example.b_events.SettingsFragment"
-            android:label="fragment_settings">
-    </fragment>
+        android:id="@+id/loginFragment"
+        android:name="com.example.b_events.authentication.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" />
     <fragment
-            android:id="@+id/loginFragment"
-            android:name="com.example.b_events.LoginFragment"
-            android:label="fragment_login"
-            tools:layout="@layout/fragment_login"/>
+        android:id="@+id/eventsFragment"
+        android:name="com.example.b_events.events.EventsFragment"
+        android:label="EventsFragment" />
 </navigation>

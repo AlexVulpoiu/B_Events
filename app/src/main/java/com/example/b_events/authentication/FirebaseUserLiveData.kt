@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.b_events
+package com.example.b_events.authentication
 
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.FirebaseAuth

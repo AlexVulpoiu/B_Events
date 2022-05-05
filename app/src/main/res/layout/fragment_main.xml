@@ -67,5 +67,33 @@
             app:layout_constraintVertical_bias="0.366"
             tools:text="@string/welcome_text" />
 
+<!--        <Button-->
+<!--            android:id="@+id/btnParseHTML"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:visibility="gone"-->
+<!--            android:text="Get website"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/auth_button"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/welcome_text" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/btnParseHTML"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:text=""-->
+<!--            android:visibility="gone"-->
+<!--            android:textColor="@android:color/background_dark"-->
+<!--            android:textSize="12sp"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/btnParseHTML"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/welcome_text" />-->
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
