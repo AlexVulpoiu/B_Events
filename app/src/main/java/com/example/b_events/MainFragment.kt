@@ -1,21 +1,6 @@
-/*
- * Copyright 2019, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.b_events
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
@@ -24,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
+import android.widget.TextView
 import android.widget.VideoView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -54,12 +40,6 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeAuthenticationState()
 
-//        val textView = view.findViewById<TextView>(R.id.textView)
-//        val button = view.findViewById<Button>(R.id.btnParseHTML)
-//        button.setOnClickListener {
-//            getHtmlFromWeb(textView)
-//        }
-
         val videoView = view.findViewById<VideoView>(R.id.videoView)
         //Creating MediaController
         val mediaController = MediaController(activity)
@@ -71,10 +51,9 @@ class MainFragment : Fragment() {
         videoView.setVideoURI(uri)
         videoView.requestFocus()
         videoView.start()
-//        binding.settingsButton.setOnClickListener {
-//            val action = MainFragmentDirections.actionMainFragmentToSettingsFragment()
-//            findNavController().navigate(action)
-//        }
+
+        val loginButton = view.findViewById<TextView>(R.id.auth_button)
+        fade(loginButton)
     }
 
     /**
@@ -96,8 +75,6 @@ class MainFragment : Fragment() {
                     }
 
                     binding.videoView.visibility = View.GONE
-//                    binding.btnParseHTML.visibility = View.VISIBLE
-//                    binding.textView.visibility = View.VISIBLE
                 }
                 else -> {
                     binding.welcomeText.text = getString(R.string.welcome_text)
@@ -106,13 +83,20 @@ class MainFragment : Fragment() {
                     binding.authButton.setOnClickListener {
                         findNavController().navigate(R.id.loginFragment)
                     }
-//                    binding.btnParseHTML.visibility = View.GONE
-//                    binding.textView.visibility = View.GONE
                     binding.videoView.visibility = View.VISIBLE
                     binding.videoView.start()
                 }
             }
         })
+    }
+
+    private fun fade(obj: View) {
+
+        val animator = ObjectAnimator.ofFloat(obj, View.ALPHA, 1f)
+        animator.duration = 2500
+        animator.startDelay = 3000
+        animator.repeatCount = 0
+        animator.start()
     }
 
     @SuppressLint("StringFormatMatches")
@@ -125,39 +109,4 @@ class MainFragment : Fragment() {
             )
         )
     }
-
-//    private fun getHtmlFromWeb(textView: TextView) {
-//        Thread(Runnable {
-//            val stringBuilder = StringBuilder()
-//            try {
-//                val doc: Document = Jsoup.connect("https://allevents.in/bucharest/all").get()
-//                val events: Elements = doc.getElementsByClass("item event-item  box-link")
-//                for (event in events) {
-//                    val info = event.getElementsByClass("meta")
-//                    val infoDiv = info[0].getElementsByClass("meta-right")
-//                    val titleDiv = infoDiv[0].getElementsByClass("title")
-//                    val title = titleDiv[0].child(0).child(0).ownText()
-//                    val link = titleDiv[0].child(0).attr("href")
-//                    val organiser = infoDiv[0].getElementsByClass("up-venue toh")[0].ownText()
-//
-//                    val dateDiv = info[0].getElementsByClass("meta-left")
-//                    val month = dateDiv[0].getElementsByClass("up-month")[0].ownText()
-//                    val day = dateDiv[0].getElementsByClass("up-day")[0].ownText()
-//
-//                    val imageDiv = event.getElementsByClass("thumb")
-//                    val imageLink = imageDiv[0].attr("data-src")
-//
-//                    stringBuilder.append("\n").append("Title: ").append(title).append("\n")
-//                        .append("Link: ").append(link).append("\n")
-//                        .append("Month: ").append(month).append("\n")
-//                        .append("Day: ").append(day).append("\n")
-//                        .append("Organiser: ").append(organiser).append("\n")
-//                        .append("Image: ").append(imageLink).append("\n")
-//                }
-//            } catch (e: IOException) {
-//                stringBuilder.append("Error: ").append(e.message).append("\n")
-//            }
-//            activity?.runOnUiThread { textView.text = stringBuilder.toString() }
-//        }).start()
-//    }
 }
