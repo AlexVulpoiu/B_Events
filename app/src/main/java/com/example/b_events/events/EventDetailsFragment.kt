@@ -1,9 +1,8 @@
 package com.example.b_events.events
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -31,6 +30,8 @@ class EventDetailsFragment: Fragment() {
             }
         }
 
+        setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -45,5 +46,37 @@ class EventDetailsFragment: Fragment() {
         }
 
         appBarLayout.addOnOffsetChangedListener(listener)
+    }
+
+    private fun getShareIntent(): Intent {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        val message = "Salut!\n" +
+                "Tocmai am gasit un eveniment intersant in Bucuresti!\n" +
+                "Este vorba despre ${binding.event?.title}!\n" +
+                "Data: ${binding.event?.dateAndTime}\n" +
+                "Locatia: ${binding.event?.fullLocation}\n" +
+                "Pentru mai multe detalii acceseaza link-ul: ${binding.event?.link}.\n" +
+                "Astept raspunsul tau!"
+        shareIntent.setType("text/plain").putExtra(Intent.EXTRA_TEXT, message)
+        return shareIntent
+    }
+
+    private fun shareEvent() {
+        startActivity(getShareIntent())
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.share_menu, menu)
+        if(getShareIntent().resolveActivity(requireActivity().packageManager) == null) {
+            menu.findItem(R.id.share).isVisible = false
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.share -> shareEvent()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
