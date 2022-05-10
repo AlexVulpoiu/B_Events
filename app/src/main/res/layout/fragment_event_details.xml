@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="event"
+            type="com.example.b_events.events.Event" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+
+            <androidx.constraintlayout.motion.widget.MotionLayout
+                android:id="@+id/motion_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutDescription="@xml/animation"
+                android:minHeight="80dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+
+                <ImageView
+                    android:id="@+id/background"
+                    android:layout_width="0dp"
+                    android:layout_height="1000dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/bucharest_clock"
+                    tools:ignore="ContentDescription"
+                    tools:srcCompat="@drawable/bucharest_clock" />
+
+                <TextView
+                    android:id="@+id/animation_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{event.day}"
+                    android:textSize="16sp"
+                    tools:text="06 JULY"/>
+
+                <TextView
+                    android:id="@+id/animation_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{event.title}"
+                    android:textSize="16sp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="148dp"
+                    tools:text="This is the event title, maybe it's something longer and it should look like this i think?!" />
+            </androidx.constraintlayout.motion.widget.MotionLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@{event.description}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

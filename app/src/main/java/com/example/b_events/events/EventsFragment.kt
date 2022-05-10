@@ -5,11 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.b_events.R
 import com.example.b_events.databinding.FragmentEventsBinding
+import com.google.android.material.appbar.AppBarLayout
 import com.google.firebase.auth.FirebaseAuth
 
 class EventsFragment : Fragment() {
@@ -27,7 +31,9 @@ class EventsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_events, container, false)
         binding.eventViewModel = eventViewModel
 
-        val adapter = EventAdapter()
+        val adapter = EventAdapter(EventListener {
+            eventViewModel.onEventClicked(it)
+        })
 
         eventViewModel.getEvents {
             adapter.data = it
@@ -37,6 +43,14 @@ class EventsFragment : Fragment() {
 //        binding.lifecycleOwner = this
 
         binding.welcomeUser.text = getFactWithPersonalization()
+
+        eventViewModel.navigateToEventDetail.observe(viewLifecycleOwner) {
+            it?.let {
+                this.findNavController()
+                    .navigate(EventsFragmentDirections.actionEventsFragmentToEventDetailsFragment(it))
+                eventViewModel.onEventDetailNavigated()
+            }
+        }
 
         return binding.root
     }

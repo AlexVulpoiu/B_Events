@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.MediaController
-import android.widget.TextView
 import android.widget.VideoView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -51,9 +50,6 @@ class MainFragment : Fragment() {
         videoView.setVideoURI(uri)
         videoView.requestFocus()
         videoView.start()
-
-        val loginButton = view.findViewById<TextView>(R.id.auth_button)
-        fade(loginButton)
     }
 
     /**
@@ -68,7 +64,7 @@ class MainFragment : Fragment() {
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     binding.welcomeText.text = getFactWithPersonalization(factToDisplay)
-
+                    binding.authButton.alpha = 1F
                     binding.authButton.text = getString(R.string.logout_button_text)
                     binding.authButton.setOnClickListener {
                         AuthUI.getInstance().signOut(requireContext())
@@ -77,8 +73,10 @@ class MainFragment : Fragment() {
                     binding.videoView.visibility = View.GONE
                 }
                 else -> {
+                    binding.authButton.alpha = 0F
                     binding.welcomeText.text = getString(R.string.welcome_text)
 
+                    fade(binding.authButton)
                     binding.authButton.text = getString(R.string.login_button_text)
                     binding.authButton.setOnClickListener {
                         findNavController().navigate(R.id.loginFragment)

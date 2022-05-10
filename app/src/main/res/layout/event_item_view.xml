@@ -1,8 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:textSize="24sp"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="event"
+            type="com.example.b_events.events.Event" />
+        
+        <variable
+            name="clickListener"
+            type="com.example.b_events.events.EventListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/left_well"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="8dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/right_well"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="8dp" />
+
+            <TextView
+                android:id="@+id/event_title"
+                android:layout_width="0dp"
+                android:layout_height="22sp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="16dp"
+                android:text="@{event.title}"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:onClick="@{() -> clickListener.onClick(event)}"
+                app:layout_constraintEnd_toStartOf="@+id/favourite_icon"
+                app:layout_constraintStart_toEndOf="@+id/left_well"
+                app:layout_constraintTop_toBottomOf="@+id/event_image"
+                tools:text="Test title" />
+
+            <ImageView
+                android:id="@+id/favourite_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="22sp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toStartOf="@+id/right_well"
+                app:layout_constraintTop_toBottomOf="@+id/event_image"
+                app:srcCompat="@drawable/ic_empty_heart" />
+
+            <TextView
+                android:id="@+id/date_and_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="@{event.day + ' ' + event.month + '\n' + event.locationName}"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                android:onClick="@{() -> clickListener.onClick(event)}"
+                app:layout_constraintEnd_toEndOf="@+id/right_well"
+                app:layout_constraintStart_toStartOf="@+id/left_well"
+                app:layout_constraintTop_toBottomOf="@+id/event_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="06 JULY\nThis is the location" />
+
+            <ImageView
+                android:id="@+id/event_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:scaleType="centerCrop"
+                android:onClick="@{() -> clickListener.onClick(event)}"
+                app:imageUrl="@{event.imageLink}"
+                app:layout_constraintDimensionRatio="h,16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

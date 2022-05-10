@@ -33,5 +33,17 @@
     <fragment
         android:id="@+id/eventsFragment"
         android:name="com.example.b_events.events.EventsFragment"
-        android:label="EventsFragment" />
+        android:label="EventsFragment" >
+        <action
+            android:id="@+id/action_eventsFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.example.b_events.events.EventDetailsFragment"
+        android:label="EventDetailsFragment" >
+        <argument
+            android:name="eventUrl"
+            app:argType="string" />
+    </fragment>
 </navigation>
