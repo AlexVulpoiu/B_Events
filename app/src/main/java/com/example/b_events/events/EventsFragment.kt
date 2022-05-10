@@ -5,15 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.b_events.R
+import com.example.b_events.database.EventsDatabase
 import com.example.b_events.databinding.FragmentEventsBinding
-import com.google.android.material.appbar.AppBarLayout
+import com.example.b_events.favorite_events.FavoriteEventViewModel
+import com.example.b_events.favorite_events.FavoriteEventViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 
 class EventsFragment : Fragment() {
@@ -31,9 +32,14 @@ class EventsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_events, container, false)
         binding.eventViewModel = eventViewModel
 
+        val application = requireNotNull(this.activity).application
+        val dataSource = EventsDatabase.getInstance(application).eventDbDao
+        val viewModelFactory = FavoriteEventViewModelFactory(dataSource, application)
+        val favoriteEventViewModel = ViewModelProvider(this, viewModelFactory)[FavoriteEventViewModel::class.java]
+
         val adapter = EventAdapter(EventListener {
             eventViewModel.onEventClicked(it)
-        })
+        }, favoriteEventViewModel)
 
         eventViewModel.getEvents {
             adapter.data = it

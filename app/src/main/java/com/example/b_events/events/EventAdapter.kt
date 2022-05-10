@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.b_events.EventItemViewHolder
 import com.example.b_events.R
 import com.example.b_events.databinding.EventItemViewBinding
+import com.example.b_events.favorite_events.FavoriteEventViewModel
 
-class EventAdapter(private val clickListener: EventListener): RecyclerView.Adapter<EventItemViewHolder>() {
+class EventAdapter(private val clickListener: EventListener,
+                   private val favoriteEventViewModel: FavoriteEventViewModel)
+    : RecyclerView.Adapter<EventItemViewHolder>() {
     var data = listOf<Event>()
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
@@ -23,6 +26,7 @@ class EventAdapter(private val clickListener: EventListener): RecyclerView.Adapt
         holder.viewDataBinding.also {
             it.event = item
             it.clickListener = clickListener
+            it.favoriteEventViewModel = favoriteEventViewModel
         }
     }
 

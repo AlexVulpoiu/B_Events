@@ -8,6 +8,10 @@
         <variable
             name="event"
             type="com.example.b_events.events.Event" />
+
+        <variable
+            name="favoriteEventViewModel"
+            type="com.example.b_events.favorite_events.FavoriteEventViewModel" />
         
         <variable
             name="clickListener"
@@ -63,6 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="22sp"
                 android:layout_marginTop="16dp"
+                android:onClick="@{() -> favoriteEventViewModel.addToFavorites(event.link)}"
                 app:layout_constraintEnd_toStartOf="@+id/right_well"
                 app:layout_constraintTop_toBottomOf="@+id/event_image"
                 app:srcCompat="@drawable/ic_empty_heart" />
