@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="favoriteEvent"
+            type="com.example.b_events.database.EventDb" />
+
+        <variable
+            name="favoriteEventViewModel"
+            type="com.example.b_events.favorite_events.FavoriteEventViewModel" />
+
+        <variable
+            name="clickListener"
+            type="com.example.b_events.favorite_events.FavoriteEventListener" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(favoriteEvent)}"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/fav_left_well"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="8dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/fav_right_well"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="8dp" />
+
+            <TextView
+                android:id="@+id/fav_event_title"
+                android:layout_width="0dp"
+                android:layout_height="22sp"
+                android:layout_marginTop="16dp"
+                android:text="@{favoriteEvent.title}"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/fav_right_well"
+                app:layout_constraintStart_toEndOf="@+id/fav_left_well"
+                app:layout_constraintTop_toBottomOf="@+id/fav_event_image"
+                tools:text="Test title" />
+
+            <TextView
+                android:id="@+id/fav_date_and_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:text="@{favoriteEvent.day + ' ' + favoriteEvent.month + '\n' + favoriteEvent.locationName}"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/fav_right_well"
+                app:layout_constraintStart_toStartOf="@+id/fav_left_well"
+                app:layout_constraintTop_toBottomOf="@+id/fav_event_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="06 JULY\nThis is the location" />
+
+            <ImageView
+                android:id="@+id/fav_event_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:adjustViewBounds="false"
+                android:cropToPadding="false"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{favoriteEvent.imageLink}"
+                app:layout_constraintDimensionRatio="h,16:9"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

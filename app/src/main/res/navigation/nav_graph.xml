@@ -46,4 +46,20 @@
             android:name="eventUrl"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteEventsFragment"
+        android:name="com.example.b_events.favorite_events.FavoriteEventsFragment"
+        android:label="FavoriteEventsFragment" >
+        <action
+            android:id="@+id/action_favoriteEventsFragment_to_favoriteEventDetailsFragment"
+            app:destination="@id/favoriteEventDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteEventDetailsFragment"
+        android:name="com.example.b_events.favorite_events.FavoriteEventDetailsFragment"
+        android:label="FavoriteEventDetailsFragment">
+        <argument
+            android:name="favoriteEventId"
+            app:argType="long" />
+    </fragment>
 </navigation>

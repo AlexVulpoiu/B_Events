@@ -1,4 +1,4 @@
-package com.example.b_events.events
+package com.example.b_events.favorite_events
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,28 +6,32 @@ import android.view.*
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.example.b_events.R
-import com.example.b_events.databinding.FragmentEventDetailsBinding
+import com.example.b_events.database.EventsDatabase
+import com.example.b_events.databinding.FragmentFavoriteEventDetailsBinding
 import com.google.android.material.appbar.AppBarLayout
 
-class EventDetailsFragment: Fragment() {
+class FavoriteEventDetailsFragment: Fragment() {
 
-    private val eventViewModel by viewModels<EventViewModel>()
+    private lateinit var binding: FragmentFavoriteEventDetailsBinding
 
-    private lateinit var binding: FragmentEventDetailsBinding
+    private lateinit var favoriteEventViewModel: FavoriteEventViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
+        val application = requireNotNull(this.activity).application
+        val dataSource = EventsDatabase.getInstance(application).eventDbDao
+
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_details, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_event_details, container, false)
 
         arguments?.let { it ->
-            val args = EventDetailsFragmentArgs.fromBundle(it)
-            eventViewModel.getEvent(args.eventUrl) {
-                it.link = args.eventUrl
-                binding.event = it
+            val args = FavoriteEventDetailsFragmentArgs.fromBundle(it)
+            favoriteEventViewModel = FavoriteEventViewModel(dataSource, application, args.favoriteEventId)
+            val currentEvent = favoriteEventViewModel.getFavoriteEvent()
+            currentEvent.observe(viewLifecycleOwner) {
+                binding.favoriteEvent = currentEvent.value
             }
         }
 
@@ -38,8 +42,8 @@ class EventDetailsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val appBarLayout: AppBarLayout = view.findViewById(R.id.appbar_layout)
-        val motionLayout: MotionLayout = view.findViewById(R.id.motion_layout)
+        val appBarLayout: AppBarLayout = view.findViewById(R.id.fav_appbar_layout)
+        val motionLayout: MotionLayout = view.findViewById(R.id.fav_motion_layout)
 
         val listener = AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
             val seekPosition = -verticalOffset / appBarLayout.totalScrollRange.toFloat()
@@ -53,10 +57,10 @@ class EventDetailsFragment: Fragment() {
         val shareIntent = Intent(Intent.ACTION_SEND)
         val message = "Salut!\n" +
                 "Tocmai am gasit un eveniment intersant in Bucuresti!\n" +
-                "Este vorba despre ${binding.event?.title}!\n" +
-                "Data: ${binding.event?.dateAndTime}\n" +
-                "Locatia: ${binding.event?.fullLocation}\n" +
-                "Pentru mai multe detalii acceseaza link-ul: ${binding.event?.link}.\n" +
+                "Este vorba despre ${binding.favoriteEvent?.title}!\n" +
+                "Data: ${binding.favoriteEvent?.dateAndTime}\n" +
+                "Locatia: ${binding.favoriteEvent?.fullLocation}\n" +
+                "Pentru mai multe detalii acceseaza link-ul: ${binding.favoriteEvent?.link}.\n" +
                 "Astept raspunsul tau!"
         shareIntent.setType("text/plain").putExtra(Intent.EXTRA_TEXT, message)
         return shareIntent

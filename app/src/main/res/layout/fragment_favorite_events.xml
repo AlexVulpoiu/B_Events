@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="favoriteEventViewModel"
             type="com.example.b_events.favorite_events.FavoriteEventViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/favorite_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/text_padding"
-            android:textAlignment="center"
-            android:textSize="36sp"
             android:text="@string/favorite_events_title"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+            android:textAlignment="center"
+            android:textSize="36sp" />
+
+        <SearchView
+            android:id="@+id/event_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textCursorDrawable="@null"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/favorite_events_list"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/favorite_title"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
