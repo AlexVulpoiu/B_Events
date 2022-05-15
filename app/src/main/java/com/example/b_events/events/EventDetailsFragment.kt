@@ -7,6 +7,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.b_events.R
 import com.example.b_events.databinding.FragmentEventDetailsBinding
 import com.google.android.material.appbar.AppBarLayout
@@ -25,9 +26,16 @@ class EventDetailsFragment: Fragment() {
 
         arguments?.let { it ->
             val args = EventDetailsFragmentArgs.fromBundle(it)
-            eventViewModel.getEvent(args.eventUrl) {
-                it.link = args.eventUrl
-                binding.event = it
+            eventViewModel.getEvent(args.eventUrl) { eventIt ->
+                eventIt.link = args.eventUrl
+                binding.event = eventIt
+
+                binding.mapsButtonEvent.setOnClickListener {
+                    findNavController().navigate(
+                        EventDetailsFragmentDirections
+                            .actionEventDetailsFragmentToMapsFragment(eventIt.fullLocation)
+                    )
+                }
             }
         }
 

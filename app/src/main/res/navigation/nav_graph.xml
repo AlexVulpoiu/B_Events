@@ -45,6 +45,9 @@
         <argument
             android:name="eventUrl"
             app:argType="string" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteEventsFragment"
@@ -61,5 +64,19 @@
         <argument
             android:name="favoriteEventId"
             app:argType="long" />
+        <action
+            android:id="@+id/action_favoriteEventDetailsFragment_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.b_events.maps.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+
+        <argument
+            android:name="location"
+            app:argType="string"
+            />
     </fragment>
 </navigation>

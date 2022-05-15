@@ -6,6 +6,7 @@ import android.view.*
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.b_events.R
 import com.example.b_events.database.EventsDatabase
 import com.example.b_events.databinding.FragmentFavoriteEventDetailsBinding
@@ -32,6 +33,13 @@ class FavoriteEventDetailsFragment: Fragment() {
             val currentEvent = favoriteEventViewModel.getFavoriteEvent()
             currentEvent.observe(viewLifecycleOwner) {
                 binding.favoriteEvent = currentEvent.value
+            }
+
+            binding.mapsFavButton.setOnClickListener {
+                findNavController().navigate(
+                    FavoriteEventDetailsFragmentDirections
+                        .actionFavoriteEventDetailsFragmentToMapsFragment(currentEvent.value!!.fullLocation)
+                )
             }
         }
 

@@ -80,7 +80,7 @@ class LoginFragment : Fragment() {
             when (authenticationState) {
 //                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.popBackStack()
     // TODO: change back to eventsFragment
-                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.navigate(R.id.favoriteEventsFragment)
+                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.navigate(R.id.eventsFragment)
                 LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION -> Snackbar.make(
                     view, requireActivity().getString(R.string.login_unsuccessful_msg),
                     Snackbar.LENGTH_LONG
