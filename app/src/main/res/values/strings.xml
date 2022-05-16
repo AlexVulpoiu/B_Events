@@ -49,4 +49,9 @@
     <string name="take_photo">Take Photo</string>
     <string name="start_capture">Start Capture</string>
     <string name="stop_capture">Stop Capture</string>
+
+    <string name="camera">Camera</string>
+    <string name="auth">Authentication</string>
+    <string name="allEvents">All events</string>
+    <string name="favoriteEvents">Favorite events</string>
 </resources>

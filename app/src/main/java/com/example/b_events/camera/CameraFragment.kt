@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import java.util.concurrent.Executors
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -22,6 +23,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.b_events.R
+import com.example.b_events.authentication.LoginViewModel
 import com.example.b_events.databinding.FragmentCameraBinding
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -31,6 +36,8 @@ class CameraFragment : Fragment(), CoroutineScope {
     private lateinit var viewBinding: FragmentCameraBinding
     private lateinit var fragmentContext: Context
     private lateinit var fragmentActivity: FragmentActivity
+
+    private val loginViewModel by viewModels<LoginViewModel>()
 
     private var imageCapture: ImageCapture? = null
 
@@ -68,6 +75,27 @@ class CameraFragment : Fragment(), CoroutineScope {
         cameraExecutor = Executors.newSingleThreadExecutor()
         // Inflate the layout for this fragment
         return viewBinding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val navController = findNavController()
+        loginViewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
+            when (authenticationState) {
+                LoginViewModel.AuthenticationState.AUTHENTICATED -> Log.i(TAG, "Authenticated")
+                // If the user is not logged in, they should not be able to set any preferences,
+                // so navigate them to the login fragment
+                LoginViewModel.AuthenticationState.UNAUTHENTICATED -> {
+                    navController.navigate(
+                        R.id.loginFragment
+                    )
+                    Toast.makeText(context, "You should be authenticated to access the camera", Toast.LENGTH_LONG).show()
+                }
+                else -> Log.e(
+                    TAG, "New $authenticationState state that doesn't require any UI change"
+                )
+            }
+        })
     }
 
 

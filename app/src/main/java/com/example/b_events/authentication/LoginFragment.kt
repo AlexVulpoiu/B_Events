@@ -79,7 +79,7 @@ class LoginFragment : Fragment() {
         viewModel.authenticationState.observe(viewLifecycleOwner, Observer { authenticationState ->
             when (authenticationState) {
 //                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.popBackStack()
-                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.navigate(R.id.cameraFragment)
+                LoginViewModel.AuthenticationState.AUTHENTICATED -> navController.navigate(R.id.eventsFragment)
                 LoginViewModel.AuthenticationState.INVALID_AUTHENTICATION -> Snackbar.make(
                     view, requireActivity().getString(R.string.login_unsuccessful_msg),
                     Snackbar.LENGTH_LONG

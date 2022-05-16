@@ -24,16 +24,16 @@
     <fragment
             android:id="@+id/mainFragment"
             android:name="com.example.b_events.MainFragment"
-            android:label="MainFragment"/>
+            android:label="@string/app_name"/>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.b_events.authentication.LoginFragment"
-        android:label="LoginFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/eventsFragment"
         android:name="com.example.b_events.events.EventsFragment"
-        android:label="EventsFragment" >
+        android:label="@string/app_name" >
         <action
             android:id="@+id/action_eventsFragment_to_eventDetailsFragment"
             app:destination="@id/eventDetailsFragment" />
@@ -41,7 +41,7 @@
     <fragment
         android:id="@+id/eventDetailsFragment"
         android:name="com.example.b_events.events.EventDetailsFragment"
-        android:label="EventDetailsFragment" >
+        android:label="@string/app_name" >
         <argument
             android:name="eventUrl"
             app:argType="string" />
@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/favoriteEventsFragment"
         android:name="com.example.b_events.favorite_events.FavoriteEventsFragment"
-        android:label="FavoriteEventsFragment" >
+        android:label="@string/app_name" >
         <action
             android:id="@+id/action_favoriteEventsFragment_to_favoriteEventDetailsFragment"
             app:destination="@id/favoriteEventDetailsFragment" />
@@ -60,7 +60,7 @@
     <fragment
         android:id="@+id/favoriteEventDetailsFragment"
         android:name="com.example.b_events.favorite_events.FavoriteEventDetailsFragment"
-        android:label="FavoriteEventDetailsFragment">
+        android:label="@string/app_name">
         <argument
             android:name="favoriteEventId"
             app:argType="long" />
@@ -71,7 +71,7 @@
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.example.b_events.maps.MapsFragment"
-        android:label="fragment_maps"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_maps" >
 
         <argument
@@ -82,5 +82,5 @@
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.example.b_events.camera.CameraFragment"
-        android:label="CameraFragment" />
+        android:label="@string/app_name" />
 </navigation>
