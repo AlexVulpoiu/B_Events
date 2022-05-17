@@ -9,6 +9,9 @@ data class EventDb(
     @PrimaryKey(autoGenerate = true)
     var eventId: Long = 0,
 
+    @ColumnInfo(name = "user_id")
+    var userId: String = "",
+
     @ColumnInfo(name = "title")
     var title: String = "",
 

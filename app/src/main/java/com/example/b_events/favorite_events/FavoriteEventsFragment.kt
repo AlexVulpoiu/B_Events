@@ -18,7 +18,6 @@ import com.example.b_events.authentication.LoginViewModel
 import com.example.b_events.database.EventDb
 import com.example.b_events.database.EventsDatabase
 import com.example.b_events.databinding.FragmentFavoriteEventsBinding
-import com.google.firebase.auth.FirebaseAuth
 
 class FavoriteEventsFragment: Fragment() {
 

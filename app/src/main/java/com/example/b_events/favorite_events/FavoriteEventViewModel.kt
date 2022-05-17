@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.b_events.database.EventDb
 import com.example.b_events.database.EventDbDao
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -50,31 +51,33 @@ class FavoriteEventViewModel(val database: EventDbDao, application: Application,
             newEvent.day = day
             newEvent.link = eventUrl
             newEvent.imageLink = imageLink
+            newEvent.userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
             insert(newEvent)
         }
     }
 
     private fun insert(event: EventDb) {
-        database.insert(event)
-        println("INSERT OKKKKKKKKKKKKKKKKK")
-        // this is extra
-//        val events = database.getAllEvents()
-//        println(events.size.toString() + " -------> " + events)
-        printEvents()
-//        viewModelScope.launch {
-//            printEvents()
-//        }
-    }
 
-    private fun printEvents() {
-        val events = database.getAllEvents()
-        println(events.size.toString() + " favorite events ")
+        val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+        val favoriteEvents = database.getAllEvents(userId)
+        var eventExists = false
+        for(ev in favoriteEvents) {
+            if(ev.title == event.title
+                && ev.dateAndTime == event.dateAndTime
+                && ev.fullLocation == event.fullLocation) {
+                eventExists = true
+            }
+        }
+        if(!eventExists) {
+            database.insert(event)
+        }
     }
 
     fun getAllFavoriteEvents(cb: (List<EventDb>) -> Unit) {
 
         viewModelScope.launch(Dispatchers.IO) {
-            val favEvents = database.getAllEvents()
+            val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            val favEvents = database.getAllEvents(userId)
 
             GlobalScope.launch {
                 withContext(Dispatchers.Main) {

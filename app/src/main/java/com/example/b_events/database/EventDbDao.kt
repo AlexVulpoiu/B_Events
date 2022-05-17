@@ -1,9 +1,7 @@
 package com.example.b_events.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface EventDbDao {
@@ -14,6 +12,6 @@ interface EventDbDao {
     @Query("SELECT * from events WHERE eventId = :key")
     fun get(key: Long): LiveData<EventDb>
 
-    @Query("SELECT * FROM events ORDER BY eventId DESC")
-    fun getAllEvents(): List<EventDb>
+    @Query("SELECT * FROM events WHERE user_id = :userId ORDER BY eventId DESC")
+    fun getAllEvents(userId: String): List<EventDb>
 }
