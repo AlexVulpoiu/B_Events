@@ -9,9 +9,7 @@ import com.example.b_events.database.EventDb
 import com.example.b_events.database.EventDbDao
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 
@@ -24,6 +22,10 @@ class FavoriteEventViewModel(val database: EventDbDao, application: Application,
 
     private val favoriteEvent: LiveData<EventDb> = database.get(favoriteEventId)
     fun getFavoriteEvent() = favoriteEvent
+
+    private val user = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    private val favoriteEventsList: LiveData<List<EventDb>> = database.getAllEvents(user)
+    fun getFavoriteEvents() = favoriteEventsList
 
     fun addToFavorites(eventUrl: String) {
 
@@ -58,10 +60,8 @@ class FavoriteEventViewModel(val database: EventDbDao, application: Application,
 
     private fun insert(event: EventDb) {
 
-        val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
-        val favoriteEvents = database.getAllEvents(userId)
         var eventExists = false
-        for(ev in favoriteEvents) {
+        for(ev in FavoriteEventsFragment.favoriteEventsList) {
             if(ev.title == event.title
                 && ev.dateAndTime == event.dateAndTime
                 && ev.fullLocation == event.fullLocation) {
@@ -73,18 +73,14 @@ class FavoriteEventViewModel(val database: EventDbDao, application: Application,
         }
     }
 
-    fun getAllFavoriteEvents(cb: (List<EventDb>) -> Unit) {
-
+    fun removeFromFavorites(event: EventDb) {
         viewModelScope.launch(Dispatchers.IO) {
-            val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
-            val favEvents = database.getAllEvents(userId)
-
-            GlobalScope.launch {
-                withContext(Dispatchers.Main) {
-                    cb.invoke(favEvents)
-                }
-            }
+            deleteEvent(event)
         }
+    }
+
+    private suspend fun deleteEvent(event: EventDb) {
+        database.deleteEvent(event)
     }
 
     fun onFavoriteEventClicked(id: Long) {

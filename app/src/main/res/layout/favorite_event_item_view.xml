@@ -61,13 +61,23 @@
                 app:layout_constraintTop_toBottomOf="@+id/fav_event_image"
                 tools:text="Test title" />
 
+            <ImageView
+                android:id="@+id/delete_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="22sp"
+                android:layout_marginTop="16dp"
+                android:onClick="@{() -> favoriteEventViewModel.removeFromFavorites(favoriteEvent)}"
+                app:layout_constraintEnd_toStartOf="@+id/fav_right_well"
+                app:layout_constraintTop_toBottomOf="@+id/fav_event_image"
+                app:srcCompat="@android:drawable/ic_menu_delete" />
+
             <TextView
                 android:id="@+id/fav_date_and_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:text="@{favoriteEvent.day + ' ' + favoriteEvent.month + '\n' + favoriteEvent.locationName}"
+                android:text="@{favoriteEvent.day + '\n' + favoriteEvent.fullLocation}"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
                 android:textSize="14sp"

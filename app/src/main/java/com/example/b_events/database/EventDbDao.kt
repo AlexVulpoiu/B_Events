@@ -13,5 +13,8 @@ interface EventDbDao {
     fun get(key: Long): LiveData<EventDb>
 
     @Query("SELECT * FROM events WHERE user_id = :userId ORDER BY eventId DESC")
-    fun getAllEvents(userId: String): List<EventDb>
+    fun getAllEvents(userId: String): LiveData<List<EventDb>>
+
+    @Delete
+    suspend fun deleteEvent(eventDb: EventDb)
 }

@@ -25,6 +25,10 @@ class FavoriteEventsFragment: Fragment() {
 
     private val loginViewModel by viewModels<LoginViewModel>()
 
+    companion object {
+        lateinit var favoriteEventsList: List<EventDb>
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
@@ -41,12 +45,13 @@ class FavoriteEventsFragment: Fragment() {
             favoriteEventsViewModel.onFavoriteEventClicked(it)
         }, favoriteEventsViewModel)
 
-        favoriteEventsViewModel.getAllFavoriteEvents { favoriteEvents ->
+        favoriteEventsViewModel.getFavoriteEvents().observe(viewLifecycleOwner) { favoriteEvents ->
             adapter =
                 FavoriteEventAdapter(favoriteEvents as ArrayList<EventDb>, FavoriteEventListener {
                     favoriteEventsViewModel.onFavoriteEventClicked(it)
                 }, favoriteEventsViewModel)
 
+            favoriteEventsList = favoriteEvents
             binding.favoriteEventsList.adapter = adapter
             binding.favoriteEventViewModel = favoriteEventsViewModel
             binding.lifecycleOwner = this
